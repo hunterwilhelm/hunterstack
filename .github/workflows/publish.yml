@@ -18,11 +18,10 @@ jobs:
         working-directory: src/hunterstack-chain
         run: npm ci
       - name: Create Release Pull Request or Publish
-        working-directory: src/hunterstack-chain
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: cwnpm run release
+          publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
