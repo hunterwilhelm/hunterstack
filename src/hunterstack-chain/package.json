@@ -1,6 +1,6 @@
 {
   "name": "@hunterstack/chain",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Type-inferred if and switch statements that return values.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
