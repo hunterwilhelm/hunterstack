@@ -1,0 +1,19 @@
+{
+  "name": "@hunterstack/chain",
+  "version": "1.0.0",
+  "description": "Type-inferred if and switch statements that return values.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "lint": "tsc"
+  },
+  "author": "Hunter Wilhelm",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4",
+    "@changesets/cli": "^2.26.1"
+  }
+}
