@@ -1,13 +1,13 @@
 /** used for returning something from an if, else if, else statement without nasty ternaries */
-export type chainIf<ArgType> = {
+export type ChainIf<ArgType> = {
   else: (value: ArgType | (() => ArgType)) => ArgType;
-  elseIf: (nextPredicate: any, nextValueIfTrue: ArgType | (() => ArgType)) => chainIf<ArgType>;
+  elseIf: (nextPredicate: any, nextValueIfTrue: ArgType | (() => ArgType)) => ChainIf<ArgType>;
   get: () => ArgType | undefined;
 };
 export function chainIf<T>(
   predicate: boolean | any,
   valueIfTrue: T | (() => T)
-): chainIf<T> {
+): ChainIf<T> {
   return _if(predicate, valueIfTrue, { reachedTrue: false });
 }
 
@@ -15,7 +15,7 @@ function _if<ArgType>(
   predicate: boolean | any,
   valueIfTrue: ArgType | (() => ArgType),
   state: { reachedTrue: false } | { reachedTrue: true; value: ArgType }
-): chainIf<ArgType> {
+): ChainIf<ArgType> {
   const newState =
     predicate && !state.reachedTrue
       ? {
@@ -42,18 +42,18 @@ function _if<ArgType>(
   };
 }
 
-export type chainCase<ArgType, RT = unknown> = {
+export type ChainCase<ArgType, RT> = {
   default: <AdditionalType>(
     nextValue: AdditionalType | ((value: ArgType) => AdditionalType)
-  ) => RT | AdditionalType;
+  ) => Exclude<AdditionalType | RT, null>;
   case: <AdditionalType>(
     nextPredicate: ArgType | ((value: ArgType) => boolean),
     nextValueIfTrue: AdditionalType | ((value: ArgType) => AdditionalType)
-  ) => chainCase<ArgType>;
+  ) => ChainCase<ArgType, AdditionalType>;
 };
 
 /** used for returning something from a switch case */
-export function chainCase<ArgType>(value: ArgType): chainCase<ArgType> {
+export function chainCase<ArgType>(value: ArgType): ChainCase<ArgType, null> {
   return _case(value, () => false, { reachedTrue: false });
 }
 
@@ -62,7 +62,7 @@ function _case<ArgType, ResultType>(
   predicate: ((value: ArgType) => boolean) | ArgType,
   state: { reachedTrue: false } | { reachedTrue: true; value: any },
   valueIfTrue?: ((value: ArgType) => ResultType) | ResultType
-): chainCase<ArgType> {
+): ChainCase<ArgType, null> {
   const predicateValue =
     predicate instanceof Function ? predicate(value) : value === predicate;
   const newState =
