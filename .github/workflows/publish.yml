@@ -14,8 +14,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - working-directory: src/hunterstack-chain
-      - run: npm ci
+      - run:
+        shell: npm ci
+        working-directory: src/hunterstack-chain
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
