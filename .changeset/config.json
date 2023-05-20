@@ -7,6 +7,5 @@
   "access": "restricted",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": [],
-  "cwd": "/src/hunterstack-chain"
+  "ignore": []
 }
